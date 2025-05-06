@@ -111,3 +111,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+@app.post("/auth/login")
+async def login(request: LoginRequest):
+    # Kullanıcı doğrulama işlemi burada yapılır
+    if request.username == "admin" and request.password == "1234":
+        return {"message": "Giriş başarılı!", "username": request.username}
+    else:
+        return {"message": "Geçersiz kullanıcı adı veya şifre"}, 401
