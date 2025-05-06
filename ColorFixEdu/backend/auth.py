@@ -4,6 +4,8 @@ from passlib.context import CryptContext
 from pydantic import BaseModel
 from datetime import datetime, timedelta
 import jwt
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -100,3 +102,12 @@ async def test_token():
     except Exception as e:
         print(f"Test token creation error: {e}")
         raise HTTPException(status_code=500, detail="Test token oluşturulamadı")
+
+# CORS ayarlarını ekleyin
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Tüm domainlere izin verir, güvenlik için sadece frontend URL'sini ekleyin, örn: ["http://localhost:3000"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
