@@ -69,6 +69,59 @@
                 alert("Hata: " + error.message);
             });
         });
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <form id="loginForm">
+        <label for="username">Kullanıcı Adı:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Şifre:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Giriş Yap</button>
+    </form>
+
+    <script>
+        // Backend URL'si burada tanımlanır
+        const API_BASE_URL = "http://localhost:8000"; // Backend'inizin çalıştığı URL
+
+        // Formun submit olayını dinler
+        document.getElementById("loginForm").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Sayfanın yeniden yüklenmesini engeller
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username, password }), // JSON formatında veri gönderir
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert("Giriş başarılı!");
+                    console.log(data); // Backend'den dönen veriyi konsola yazdırır
+                } else {
+                    alert("Giriş başarısız!");
+                }
+            } catch (error) {
+                console.error("Hata:", error);
+                alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+            }
+        });
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
