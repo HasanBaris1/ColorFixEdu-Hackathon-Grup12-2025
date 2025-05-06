@@ -49,11 +49,11 @@
                         found = true;
                         const uid = doc.id;
 
-                        // Kullanıcı ID'sini localStorage'a kaydet
+                       
                         localStorage.setItem("userId", uid);
                         localStorage.setItem("username", username);
 
-                        // Login zamanını güncelle
+              
                         db.collection("users").doc(uid).update({
                             login_time: new Date().toUTCString()
                         });
